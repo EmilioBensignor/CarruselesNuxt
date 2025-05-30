@@ -89,7 +89,54 @@
     touch-action: pan-x;
 }
 
-/* Smooth transition para loops infinitos */
-.carousel-smooth-transition {
-    transition: transform 0.5s ease-in-out;
+/* Mobile carousel - 1.5 slides visibles */
+.mobile-carousel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.mobile-slide {
+    /* Mobile: 1 slide + 1/2 del siguiente */
+    width: calc(100vw - 4rem);
+    /* Full width menos padding */
+    max-width: calc(100vw - 4rem);
+    flex-shrink: 0;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+    .mobile-slide {
+        /* SM: 2 slides */
+        width: calc(50% - 0.5rem);
+        max-width: calc(50% - 0.5rem);
+    }
+
+    .mobile-carousel {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-slide {
+        /* MD: 2.5 slides */
+        width: calc(40% - 0.8rem);
+        max-width: calc(40% - 0.8rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobile-slide {
+        /* LG: 3 slides */
+        width: calc(33.333% - 0.67rem);
+        max-width: calc(33.333% - 0.67rem);
+    }
+}
+
+@media (min-width: 1280px) {
+    .mobile-slide {
+        /* XL: 4 slides */
+        width: calc(25% - 0.75rem);
+        max-width: calc(25% - 0.75rem);
+    }
 }

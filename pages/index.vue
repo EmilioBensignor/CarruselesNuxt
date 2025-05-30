@@ -152,6 +152,71 @@
                 </div>
             </section>
 
+            <!-- Carousel 4: Mobile 1.5 slides visibles -->
+            <section class="mb-16">
+                <h2 class="text-2xl font-semibold mb-6">4. Carousel Mobile (1 + 1/2 slides)</h2>
+                <div class="relative max-w-6xl mx-auto">
+                    <div ref="carousel4"
+                        class="carousel-container flex overflow-x-auto gap-4 pb-4 touch-pan-x mobile-carousel"
+                        @scroll="updateIndicators(4)" @mousedown="startDrag" @mousemove="onDrag" @mouseup="stopDrag"
+                        @mouseleave="stopDrag" @wheel="onWheel">
+                        <div v-for="(feature, index) in features" :key="index"
+                            class="carousel-item mobile-slide bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            <div
+                                class="h-32 sm:h-48 bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-500 flex items-center justify-center relative">
+                                <span class="text-4xl sm:text-6xl">{{ feature.icon }}</span>
+                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                                    <span class="text-white text-xs font-semibold">{{ feature.category }}</span>
+                                </div>
+                            </div>
+                            <div class="p-4 sm:p-6">
+                                <h3 class="text-lg sm:text-xl font-bold mb-2 text-gray-800">{{ feature.title }}</h3>
+                                <p class="text-gray-600 text-sm sm:text-base mb-4">{{ feature.description }}</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-1">
+                                        <svg v-for="i in 5" :key="i" class="w-4 h-4"
+                                            :class="i <= feature.rating ? 'text-yellow-400' : 'text-gray-300'"
+                                            fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <span class="text-xs text-gray-500 ml-1">{{ feature.rating }}/5</span>
+                                    </div>
+                                    <span class="text-lg sm:text-xl font-bold text-indigo-600">${{ feature.price
+                                    }}</span>
+                                </div>
+                                <button
+                                    class="w-full mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Indicadores para mobile carousel -->
+                    <div class="flex justify-center mt-6 space-x-2">
+                        <button v-for="(_, index) in features" :key="index" @click="goToSlide(4, index)"
+                            class="w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300"
+                            :class="currentSlides[4] === index ? 'bg-indigo-500 scale-110' : 'bg-gray-300'" />
+                    </div>
+
+                    <!-- Mobile hint -->
+                    <div class="block sm:hidden mt-4 text-center">
+                        <p class="text-sm text-gray-500 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                            </svg>
+                            Desliza para ver más
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Información técnica -->
             <section class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-2xl font-semibold mb-6">Características Técnicas</h2>
@@ -176,9 +241,9 @@
                         <h3 class="font-semibold text-red-800 mb-2">📦 Sin dependencias</h3>
                         <p class="text-sm text-red-700">No requiere librerías externas como Swiper</p>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-indigo-800 mb-2">🚀 Performance</h3>
-                        <p class="text-sm text-indigo-700">Aceleración nativa del navegador</p>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-orange-800 mb-2">📱 Mobile 1.5 Slides</h3>
+                        <p class="text-sm text-orange-700">Muestra 1 slide + 1/2 del siguiente en móviles</p>
                     </div>
                 </div>
             </section>
@@ -233,12 +298,80 @@ const testimonials = ref([
     }
 ]);
 
+const features = ref([
+    {
+        icon: '🚀',
+        title: 'Performance Nativo',
+        description: 'Aceleleración por hardware del navegador para máxima fluidez',
+        category: 'SPEED',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '📱',
+        title: 'Mobile First',
+        description: 'Diseñado específicamente para la mejor experiencia móvil',
+        category: 'UX',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '♿',
+        title: 'Accesibilidad',
+        description: 'Compatible con lectores de pantalla y navegación por teclado',
+        category: 'A11Y',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '🎨',
+        title: 'Customizable',
+        description: 'Totalmente personalizable con CSS y sin conflictos',
+        category: 'STYLE',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '📦',
+        title: 'Sin Dependencias',
+        description: 'Cero librerías externas, código nativo puro',
+        category: 'SIZE',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '🔧',
+        title: 'Fácil Mantener',
+        description: 'Menos código, menos actualizaciones, menos problemas',
+        category: 'DEV',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '⚡',
+        title: 'Carga Rápida',
+        description: 'Sin JavaScript pesado ni CSS innecesario',
+        category: 'PERF',
+        rating: 5,
+        price: 0
+    },
+    {
+        icon: '🌐',
+        title: 'Cross Browser',
+        description: 'Funciona en todos los navegadores modernos',
+        category: 'COMPAT',
+        rating: 5,
+        price: 0
+    }
+]);
+
 // Estado reactivo
-const currentSlides = ref({ 1: 0, 2: 0, 3: 0 });
+const currentSlides = ref({ 1: 0, 2: 0, 3: 0, 4: 0 });
 const currentInfiniteSlide = ref(0); // Para el carousel infinito
 const carousel1 = ref(null);
 const carousel2 = ref(null);
 const carousel3 = ref(null);
+const carousel4 = ref(null);
 const isAutoPlaying = ref(true);
 let autoPlayInterval = null;
 
@@ -315,6 +448,12 @@ const onWheel = (e) => {
     e.preventDefault();
     const carousel = e.currentTarget;
 
+    // Para carousel mobile (4), usar scroll fluido sin snap durante wheel
+    if (carousel === carousel4.value) {
+        carousel.scrollLeft += e.deltaY * 0.8; // Sensibilidad reducida para mejor control
+        return;
+    }
+
     // Para carouseles con snap, hacer scroll suave por slides
     if (carousel === carousel1.value || carousel === carousel3.value) {
         const slideWidth = carousel.offsetWidth;
@@ -336,22 +475,36 @@ const onWheel = (e) => {
 // Métodos de navegación
 const goToSlide = (carouselId, index) => {
     const carousel = carouselId === 1 ? carousel1.value :
-        carouselId === 2 ? carousel2.value : carousel3.value;
+        carouselId === 2 ? carousel2.value :
+            carouselId === 3 ? carousel3.value : carousel4.value;
 
     if (!carousel) return;
 
-    const slideWidth = carousel.offsetWidth;
-    carousel.scrollTo({
-        left: index * slideWidth,
-        behavior: 'smooth'
-    });
+    // Para carousel mobile (4), calcular posición basada en ancho de slide
+    if (carouselId === 4) {
+        const slideElement = carousel.children[index];
+        if (slideElement) {
+            carousel.scrollTo({
+                left: slideElement.offsetLeft - 16, // Ajuste para padding
+                behavior: 'smooth'
+            });
+        }
+    } else {
+        // Para otros carouseles, usar ancho completo
+        const slideWidth = carousel.offsetWidth;
+        carousel.scrollTo({
+            left: index * slideWidth,
+            behavior: 'smooth'
+        });
+    }
 
     currentSlides.value[carouselId] = index;
 };
 
 const nextSlide = (carouselId) => {
     const totalSlides = carouselId === 1 ? images.value.length :
-        carouselId === 2 ? products.value.length : testimonials.value.length;
+        carouselId === 2 ? products.value.length :
+            carouselId === 3 ? testimonials.value.length : features.value.length;
     const current = currentSlides.value[carouselId];
     const next = current < totalSlides - 1 ? current + 1 : 0;
     goToSlide(carouselId, next);
@@ -359,7 +512,8 @@ const nextSlide = (carouselId) => {
 
 const previousSlide = (carouselId) => {
     const totalSlides = carouselId === 1 ? images.value.length :
-        carouselId === 2 ? products.value.length : testimonials.value.length;
+        carouselId === 2 ? products.value.length :
+            carouselId === 3 ? testimonials.value.length : features.value.length;
     const current = currentSlides.value[carouselId];
     const prev = current > 0 ? current - 1 : totalSlides - 1;
     goToSlide(carouselId, prev);
@@ -380,13 +534,35 @@ const scrollProducts = (direction) => {
 
 const updateIndicators = (carouselId) => {
     const carousel = carouselId === 1 ? carousel1.value :
-        carouselId === 2 ? carousel2.value : carousel3.value;
+        carouselId === 2 ? carousel2.value :
+            carouselId === 3 ? carousel3.value : carousel4.value;
 
     if (!carousel) return;
 
-    const slideWidth = carousel.offsetWidth;
-    const newSlide = Math.round(carousel.scrollLeft / slideWidth);
-    currentSlides.value[carouselId] = newSlide;
+    // Para carousel mobile (4), calcular slide actual basado en posición de scroll
+    if (carouselId === 4) {
+        const scrollLeft = carousel.scrollLeft + 16; // Ajuste para padding
+        let currentSlide = 0;
+
+        // Encontrar el slide más visible
+        for (let i = 0; i < carousel.children.length; i++) {
+            const slideElement = carousel.children[i];
+            const slideStart = slideElement.offsetLeft - 16;
+            const slideEnd = slideStart + slideElement.offsetWidth;
+
+            if (scrollLeft >= slideStart && scrollLeft < slideEnd) {
+                currentSlide = i;
+                break;
+            }
+        }
+
+        currentSlides.value[carouselId] = currentSlide;
+    } else {
+        // Para otros carouseles, usar ancho completo
+        const slideWidth = carousel.offsetWidth;
+        const newSlide = Math.round(carousel.scrollLeft / slideWidth);
+        currentSlides.value[carouselId] = newSlide;
+    }
 };
 
 // Auto-play infinito para testimonios
