@@ -1,0 +1,95 @@
+/* Estilos globales para carouseles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Scroll Snap para carouseles */
+.carousel-container {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* iOS */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE */
+    cursor: grab;
+}
+
+.carousel-container:active {
+    cursor: grabbing;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
+}
+
+.carousel-item {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    user-select: none;
+    /* Evitar selección de texto al hacer drag */
+}
+
+/* Carousel infinito - CON scroll snap para posicionamiento preciso */
+.carousel-infinite {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    /* Activado para snap points */
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.carousel-infinite:active {
+    cursor: grabbing;
+}
+
+.carousel-infinite::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-infinite .carousel-item {
+    scroll-snap-align: start;
+    /* Snap points activos */
+    scroll-snap-stop: always;
+    user-select: none;
+}
+
+/* Estilos para smooth dragging visual */
+.carousel-dragging {
+    scroll-behavior: auto !important;
+    /* Durante drag, sin snap automático */
+}
+
+.carousel-smooth {
+    scroll-behavior: smooth;
+}
+
+/* Animaciones suaves */
+.carousel-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Touch gestures mejorados */
+.touch-pan-x {
+    touch-action: pan-x;
+}
+
+/* Smooth transition para loops infinitos */
+.carousel-smooth-transition {
+    transition: transform 0.5s ease-in-out;
+}
